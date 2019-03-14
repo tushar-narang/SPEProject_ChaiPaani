@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dashboard">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F5F5F5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@color/colorPrimary"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="#ffffff"
+                android:layout_marginTop="75dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:id="@+id/dashboard_loadingBar"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Name of User"
+                    android:id="@+id/dashboard_nameOfUser"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/defaultpic"
+                app:civ_border_width="2dp"
+                android:layout_marginTop="25dp"
+                app:civ_border_color="@color/colorPrimary"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/addneworderxml"
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/new_order"
+                    android:background="@drawable/round_button_white"
+                    android:text="view menu"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/viewordersxml"
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/placed_orders"
+                    android:background="@drawable/round_button_white"
+                    android:text="Placed Orders"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/settings"
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="15dp"
+                    android:id="@+id/rate_list_button"
+                    android:background="@drawable/round_button_white"
+                    android:text="account settings"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/logout"
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="15dp"
+                    android:background="@drawable/round_button_white"
+                    android:id="@+id/logoutButton"
+                    android:text="Logout"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/addneworderxml"
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="15dp"
+                    android:background="@drawable/round_button_white"
+                    android:id="@+id/new_customer_button"
+                    android:visibility="gone"
+                    android:text="New Customer"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
