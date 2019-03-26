@@ -17,12 +17,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Roll No:"/>
+            android:text="Email Id:"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:id="@+id/Login_emailid"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:id="@+id/Login_password"/>
 
         <Button
             android:layout_width="match_parent"
