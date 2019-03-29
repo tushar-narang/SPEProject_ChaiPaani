@@ -96,6 +96,7 @@ public class Login extends AppCompatActivity {
                                 Log.w("token", token);
 
                                 Intent i = new Intent(Login.this, Dashboard.class);
+                                i.putExtra("token", token);
                                 startActivity(i);
                                 finish();
 

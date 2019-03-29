@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginTop="20dp"
                     style="?android:attr/progressBarStyleSmall"
-                    android:id="@+id/dashboard_loadingBar"/>
+                    android:id="@+id/Dashboard_loadingBar"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:text="Name of User"
-                    android:id="@+id/dashboard_nameOfUser"
+                    android:id="@+id/Dashboard_nameOfUser"
                     android:visibility="gone"/>
             </LinearLayout>
 
@@ -85,7 +85,8 @@
                     android:paddingLeft="15dp"
                     android:id="@+id/new_order"
                     android:background="@drawable/round_button_white"
-                    android:text="view menu"/>
+                    android:text="view menu"
+                    android:onClick="Dashboard_viewMenu"/>
 
             </LinearLayout>
 
