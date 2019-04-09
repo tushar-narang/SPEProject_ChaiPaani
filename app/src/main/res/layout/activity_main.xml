@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,14 +19,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logo"
-            android:id="@+id/main_appname"/>
+            android:id="@+id/main_appname"
+            android:elevation="7dp"
+            android:layout_centerInParent="true"/>
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/main_appname"
             android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:id="@+id/main_loadingbar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="30dp"
+            android:padding="15dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/main_loginlayout"
+            android:visibility="gone"
+            android:background="@drawable/borderedlayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email Id:"
+                android:textColor="@color/colorPrimaryLight"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:id="@+id/Login_emailid"
+                android:textColor="@color/colorPrimaryLight"
+                android:text="Tushar.Narang@iiitb.org"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password:"
+                android:textColor="@color/colorPrimaryLight"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:inputType="textPassword"
+                android:id="@+id/Login_password"
+                android:textColor="@color/colorPrimaryLight"
+                android:text="tushar123"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/borderedlayout"
+                android:id="@+id/Login_loginButton"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/Login_loading"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:id="@+id/Login_error"/>
+        </LinearLayout>
 
 
     </RelativeLayout>

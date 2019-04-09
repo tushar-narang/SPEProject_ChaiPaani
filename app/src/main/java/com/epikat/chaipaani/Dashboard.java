@@ -1,6 +1,7 @@
 package com.epikat.chaipaani;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -27,15 +29,20 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Dashboard extends AppCompatActivity {
 
     JSONObject userdata;
+    CircleImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         String token = getIntent().getStringExtra("token");
         new getUserDetails().execute(token);
+
+        iv = (CircleImageView) findViewById(R.id.Dashboard_userImage);
     }
 
     public void Dashboard_viewMenu(View view){
@@ -52,7 +59,7 @@ public class Dashboard extends AppCompatActivity {
         protected String doInBackground(final String... strings) {
             try {
                 RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                String URL = "http://chaipani.herokuapp.com/api/user";
+                String URL = "https://chaipani.herokuapp.com/api/user";
                 JSONObject jsonBody = new JSONObject();
                 final String requestBody = jsonBody.toString();
 
@@ -129,8 +136,29 @@ public class Dashboard extends AppCompatActivity {
             JSONObject obj = new JSONObject(response);
             username.setText(obj.getString("name"));
             username.setVisibility(View.VISIBLE);
+
+            RequestQueue mRequestQueue = Volley.newRequestQueue(this.getApplicationContext());
+            ImageRequest imageRequest = new ImageRequest(obj.getString("profile_pic"), new BitmapListener(), 0, 0, null, null, new MyErrorListener());
+            mRequestQueue.add(imageRequest);
         }catch (JSONException e){
 
+        }
+
+
+    }
+
+    private class BitmapListener implements Response.Listener<Bitmap> {
+        @Override
+        public void onResponse(Bitmap response) {
+            iv.setImageBitmap(response);
+
+        }
+    }
+
+    private class MyErrorListener implements Response.ErrorListener {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            iv.setImageResource(R.drawable.addbutton);
         }
     }
 }

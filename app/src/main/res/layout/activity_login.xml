@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:id="@+id/Login_emailid"
-            android:text="Tushar.Bharadwaj@iiitb.org"/>
+            android:text="Tushar.Narang@iiitb.org"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,7 +1,9 @@
  package com.epikat.chaipaani;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -28,6 +31,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.epikat.chaipaani.Adapters.menuAdapter;
+import com.epikat.chaipaani.DBHandler.DatabaseHandler;
+import com.epikat.chaipaani.pojo.CartItem;
 import com.epikat.chaipaani.pojo.OrderMenuItem;
 
 import org.json.JSONArray;
@@ -36,6 +41,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
  public class menuActivity extends AppCompatActivity
@@ -45,6 +51,9 @@ import java.util.List;
      private RecyclerView.Adapter mAdapter;
      private RecyclerView.LayoutManager layoutManager;
      ArrayList<OrderMenuItem> items;
+     public static TextView cartTotalItems;
+     public static DatabaseHandler db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,8 @@ import java.util.List;
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db = new DatabaseHandler(this);
         new loadCategories().execute();
         items = new ArrayList<>();
         mAdapter = new menuAdapter(getApplicationContext() , items);
@@ -69,9 +80,36 @@ import java.util.List;
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        cartTotalItems = (TextView) findViewById(R.id.menu_carttotalitems);
+
+        final SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
+
+        SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+
+                Log.w("change----", prefs.getInt("totalitems", 100) +"");
+                cartTotalItems.setText(pref.getInt("totslitems",100)+"");
+
+            }
+        };
+        pref.registerOnSharedPreferenceChangeListener(prefListener);
+
     }
 
-    @Override
+    public void showCart(View view){
+        List<CartItem> items = db.getAllItems();
+        for(CartItem i: items){
+            Log.w("item--", i.getId() + " " + i.getName() + " " + i.getQuantity());
+        }
+    }
+     @Override
+     protected void onPause() {
+         super.onPause();
+     }
+
+     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -129,7 +167,7 @@ import java.util.List;
          protected String doInBackground(final String... strings) {
              try {
                  RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                 String URL = "http://chaipani.herokuapp.com/api/categories";
+                 String URL = "https://chaipani.herokuapp.com/api/categories";
                  JSONObject jsonBody = new JSONObject();
                  final String requestBody = jsonBody.toString();
 
@@ -199,10 +237,10 @@ import java.util.List;
             for (int i = 0; i < data.length(); i++) {
 
                 menu.add(data.getJSONObject(i).getString("id") + ":" +data.getJSONObject(i).getString("name"));
-                OrderMenuItem item = new OrderMenuItem();
-                item.setName(data.getJSONObject(i).getString("name"));
-                items.add(item);
-                mAdapter.notifyItemInserted(i);
+//                OrderMenuItem item = new OrderMenuItem();
+//                item.setName(data.getJSONObject(i).getString("name"));
+//                items.add(item);
+//                mAdapter.notifyItemInserted(i);
             }
 
 
@@ -217,7 +255,7 @@ import java.util.List;
          protected String doInBackground(final String... strings) {
              try {
                  RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                 String URL = "http://chaipani.herokuapp.com/api/categories/" + strings[0];
+                 String URL = "https://chaipani.herokuapp.com/api/categories/" + strings[0];
                  JSONObject jsonBody = new JSONObject();
                  final String requestBody = jsonBody.toString();
 
@@ -287,6 +325,7 @@ import java.util.List;
                  OrderMenuItem item = new OrderMenuItem();
                  item.setName(data.getJSONObject(i).getString("name"));
                  item.setPrice(Integer.parseInt(data.getJSONObject(i).getString("price")));
+                 item.setImageurl(data.getJSONObject(i).getString("item_pic"));
                  items.add(item);
 
                  mAdapter.notifyItemInserted(items.size());
