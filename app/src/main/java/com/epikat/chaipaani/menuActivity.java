@@ -63,7 +63,7 @@ import java.util.List;
         setSupportActionBar(toolbar);
 
         db = new DatabaseHandler(this);
-        new loadCategories().execute();
+        new loadCategories().execute("actual");
         items = new ArrayList<>();
         mAdapter = new menuAdapter(getApplicationContext() , items);
 
@@ -97,6 +97,10 @@ import java.util.List;
         pref.registerOnSharedPreferenceChangeListener(prefListener);
 
     }
+
+    public void callfortest(){
+         new loadCategories().execute("test");
+     }
 
     public void showCart(View view){
         List<CartItem> items = db.getAllItems();
