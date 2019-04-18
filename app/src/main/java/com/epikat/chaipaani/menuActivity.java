@@ -1,11 +1,8 @@
  package com.epikat.chaipaani;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -33,7 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.epikat.chaipaani.Adapters.menuAdapter;
 import com.epikat.chaipaani.DBHandler.DatabaseHandler;
 import com.epikat.chaipaani.pojo.CartItem;
-import com.epikat.chaipaani.pojo.OrderMenuItem;
+import com.epikat.chaipaani.pojo.MenuItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,8 +37,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
  public class menuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,7 +47,7 @@ import java.util.List;
      private RecyclerView recyclerView;
      private RecyclerView.Adapter mAdapter;
      private RecyclerView.LayoutManager layoutManager;
-     ArrayList<OrderMenuItem> items;
+     ArrayList<MenuItem> items;
      public static TextView cartTotalItems;
      public static DatabaseHandler db;
 
@@ -63,7 +60,7 @@ import java.util.List;
         setSupportActionBar(toolbar);
 
         db = new DatabaseHandler(this);
-        new loadCategories().execute("actual");
+        new loadCategories().execute();
         items = new ArrayList<>();
         mAdapter = new menuAdapter(getApplicationContext() , items);
 
@@ -83,29 +80,43 @@ import java.util.List;
 
         cartTotalItems = (TextView) findViewById(R.id.menu_carttotalitems);
 
-        final SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
+//        final SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
+//
+//        SharedPreferences.OnSharedPreferenceChangeListener prefListener;
+//        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+//            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+//
+//                Log.w("change----", prefs.getInt("totalitems", 100) +"");
+//                cartTotalItems.setText(pref.getInt("totalitems",100)+"");
+//
+//            }
+//        };
+//        pref.registerOnSharedPreferenceChangeListener(prefListener);
 
-        SharedPreferences.OnSharedPreferenceChangeListener prefListener;
-        prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        cartTotalItems.setText(db.getItemsCount() + "");
 
-                Log.w("change----", prefs.getInt("totalitems", 100) +"");
-                cartTotalItems.setText(pref.getInt("totslitems",100)+"");
-
+        CircleImageView opencart = (CircleImageView) findViewById(R.id.opencart);
+        opencart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(menuActivity.this, cart.class);
+                startActivity(i);
             }
-        };
-        pref.registerOnSharedPreferenceChangeListener(prefListener);
-
+        });
     }
 
-    public void callfortest(){
-         new loadCategories().execute("test");
+     @Override
+     public void onRestart()
+     {
+         super.onRestart();
+         finish();
+         startActivity(getIntent());
      }
 
     public void showCart(View view){
         List<CartItem> items = db.getAllItems();
         for(CartItem i: items){
-            Log.w("item--", i.getId() + " " + i.getName() + " " + i.getQuantity());
+            Log.w("item--", i.getId() + " " + i.getQuantity());
         }
     }
      @Override
@@ -131,7 +142,7 @@ import java.util.List;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -147,7 +158,7 @@ import java.util.List;
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(android.view.MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -241,7 +252,7 @@ import java.util.List;
             for (int i = 0; i < data.length(); i++) {
 
                 menu.add(data.getJSONObject(i).getString("id") + ":" +data.getJSONObject(i).getString("name"));
-//                OrderMenuItem item = new OrderMenuItem();
+//                MenuItem item = new MenuItem();
 //                item.setName(data.getJSONObject(i).getString("name"));
 //                items.add(item);
 //                mAdapter.notifyItemInserted(i);
@@ -326,7 +337,8 @@ import java.util.List;
              items.clear();
              mAdapter.notifyDataSetChanged();
              for (int i = 0; i < data.length(); i++) {
-                 OrderMenuItem item = new OrderMenuItem();
+                 MenuItem item = new MenuItem();
+                 item.setId(Integer.parseInt(data.getJSONObject(i).getString("id")));
                  item.setName(data.getJSONObject(i).getString("name"));
                  item.setPrice(Integer.parseInt(data.getJSONObject(i).getString("price")));
                  item.setImageurl(data.getJSONObject(i).getString("item_pic"));
@@ -340,4 +352,5 @@ import java.util.List;
 
          }
      }
+
 }

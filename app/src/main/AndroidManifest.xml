@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Orders"
+            android:label="My Orders"/>
+        <activity
+            android:name=".cart"
+            android:label="My Cart" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +27,8 @@
         <activity android:name=".Dashboard" />
         <activity
             android:name=".menuActivity"
-            android:label="@string/title_activity_menu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="Menu"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

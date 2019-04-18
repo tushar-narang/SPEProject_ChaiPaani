@@ -105,7 +105,8 @@
                     android:paddingLeft="15dp"
                     android:id="@+id/placed_orders"
                     android:background="@drawable/round_button_white"
-                    android:text="Placed Orders"/>
+                    android:text="Placed Orders"
+                    android:onClick="Dashboard_viewOrders"/>
 
             </LinearLayout>
             <LinearLayout

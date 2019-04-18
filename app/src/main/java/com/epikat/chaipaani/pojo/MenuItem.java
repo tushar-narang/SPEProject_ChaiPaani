@@ -1,9 +1,18 @@
 package com.epikat.chaipaani.pojo;
 
-public class OrderMenuItem {
+public class MenuItem {
+    int id;
     String name;
     int price;
     String imageurl;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -27,5 +36,15 @@ public class OrderMenuItem {
 
     public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", imageurl='" + imageurl + '\'' +
+                '}';
     }
 }
