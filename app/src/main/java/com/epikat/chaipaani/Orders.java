@@ -69,8 +69,6 @@ public class Orders extends AppCompatActivity {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.w("response here", response);
-                        Log.i("VOLLEY here", response);
                         updateOrdersList(response);
                     }
                 }, new Response.ErrorListener() {
@@ -122,7 +120,6 @@ public class Orders extends AppCompatActivity {
     }
 
     public void updateOrdersList(String response) {
-        Log.w("update item function123", response);
         try {
             JSONObject object = new JSONObject(response);
             JSONArray data = object.getJSONArray("data");

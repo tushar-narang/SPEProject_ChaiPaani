@@ -201,7 +201,7 @@ public class ordersAdapter extends RecyclerView.Adapter<ordersAdapter.MenuView> 
     }
 
     public void updateOrdersList(String response, TextView prodview, TextView quanview) {
-        Log.w("update item function123", response);
+
         try {
             JSONObject object = new JSONObject(response);
             JSONArray data = object.getJSONArray("data");
